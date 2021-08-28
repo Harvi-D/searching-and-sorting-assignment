@@ -6,33 +6,28 @@ const sort = require("./sort");
  */
 
  function compare(left, right) {
-    if (left === right) {
-      return 0;
-    }
-    if (left > right) {
-      return 1;
-    }
-    if (left < right) {
-      return -1;
-    }
+    if (left === right) return 0;
+    if (left > right) return 1;
+    if (left < right) return -1;
 }
 
-function nameSort(customers) {
+function sortByName(customers) {
+    let sortedArr = [];
+    let fullName = customers.map((customer) => {
+       return customer.lastName + customer.firstName;
+    });
+  
+    const sortByLast = sort(compare, fullName);
+    
+    sortByLast.forEach((name) => {
+      let lastName = name.slice(0, 1);
+      let firstName = name.slice(1);
 
-    let names = customers.map((customer) => customer.lastName + customer.firstName);
+      let finalName = { firstName, lastName }
+      sortedArr.push(finalName);
+    });
 
-    let sorted = sort(compare, names);
-    customers = [];
-
-    sorted.forEach((name) => {
-        let lastName = name.slice(0, 1);
-        let firstName = name.slice(1, name.length);
-
-        let newObj = { firstName, lastName };
-
-        customers.push(newObj);
-    })
-    return customers;
+    return sortedArr;
 }
 
-module.exports = nameSort;
+module.exports = sortByName;
