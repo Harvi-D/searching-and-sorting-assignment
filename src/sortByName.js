@@ -17,24 +17,22 @@ const sort = require("./sort");
     }
 }
 
-function sortByName(customers) {
-    
-    let fullName = customers.map((customer) => {
-        customer.lastName + customer.firstName;
-    });
-  
-    let sortByLast = sort(compare, fullName);
+function nameSort(customers) {
+
+    let names = customers.map((customer) => customer.lastName + customer.firstName);
+
+    let sorted = sort(compare, names);
     customers = [];
-    
-    sortByLast.forEach((name) => {
-      let lastName = name.slice(0);
-      let firstName = name.slice(1);
 
-      let finalName = { lastName, firstName }
-      customers.push(finalName);
-    });
+    sorted.forEach((name) => {
+        let lastName = name.slice(0, 1);
+        let firstName = name.slice(1, name.length);
 
+        let newObj = { firstName, lastName };
+
+        customers.push(newObj);
+    })
     return customers;
 }
 
-module.exports = sortByName;
+module.exports = nameSort;
